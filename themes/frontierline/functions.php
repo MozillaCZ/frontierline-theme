@@ -41,7 +41,7 @@ function frontierline_setup() {
   add_theme_support('customize-selective-refresh-widgets');
 
   // Register custom menus
-  register_nav_menu('global_menu', __('Global Menu', 'frontierline'));
+  register_nav_menu('main_menu', __('Main Menu', 'frontierline'));
   register_nav_menu('site_menu', __('Site Menu', 'frontierline'));
 }
 endif;
@@ -453,11 +453,11 @@ function frontierline_enqueue_bits() {
   wp_enqueue_script('jquery');
 
   // Load the global script
-  wp_register_script('global', get_template_directory_uri() . '/js/global.js', 'jquery', '2.1', true);
+  wp_register_script('global', get_template_directory_uri() . '/js/global.js', 'jquery', '2.2', true);
   wp_enqueue_script('global');
 
   // Load the newsletter script
-  wp_register_script('basket-client', get_template_directory_uri() . '/js/basket-client.js', '', '1.1', true);
+  wp_register_script('basket-client', get_template_directory_uri() . '/js/basket-client.js', '', '1.2', true);
   wp_enqueue_script('basket-client');
 
   // Load the threaded comment reply script on pages where threaded comments are enabled

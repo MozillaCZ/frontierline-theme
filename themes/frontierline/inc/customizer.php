@@ -13,12 +13,14 @@ function frontierline_customize_register($wp_customize) {
 
   // Register color scheme setting and control
   $wp_customize->add_setting('frontierline_color_scheme', array(
+    'capability'        => 'edit_theme_options',
     'default'           => 'none',
     'sanitize_callback' => 'frontierline_sanitize_color_scheme',
     'transport'         => 'postMessage',
   ));
 
   $wp_customize->add_control('frontierline_color_scheme', array(
+    'capability'        => 'edit_theme_options',
     'label'    => __('Accent Color', 'frontierline'),
     'priority' => 5,
     'section'  => 'frontierline_theme_options',
@@ -39,12 +41,14 @@ function frontierline_customize_register($wp_customize) {
 
   // Register header pattern option and control
   $wp_customize->add_setting('frontierline_head_pattern', array(
+    'capability'        => 'edit_theme_options',
     'default'           => 'none',
     'sanitize_callback' => 'frontierline_sanitize_head_pattern',
     'transport'         => 'postMessage',
   ));
 
   $wp_customize->add_control('frontierline_head_pattern', array(
+    'capability'        => 'edit_theme_options',
     'label'    => __('Header Pattern', 'frontierline'),
     'priority' => 6,
     'section'  => 'frontierline_theme_options',
@@ -57,6 +61,26 @@ function frontierline_customize_register($wp_customize) {
       'emoticons'     => __('Emoticons', 'frontierline'),
       'slashbracket'  => __('Slashes and Brackets', 'frontierline'),
       'tradewinds'    => __('Trade Winds', 'frontierline'),
+    ),
+  ));
+
+  // Register Firefox download button option and control
+  $wp_customize->add_setting('frontierline_global_firefox', array(
+    'capability'        => 'edit_theme_options',
+    'default'           => 'link',
+    'sanitize_callback' => 'frontierline_sanitize_global_firefox',
+    'transport'         => 'postMessage',
+  ));
+
+  $wp_customize->add_control('frontierline_global_firefox', array(
+    'label'       => esc_html__('Firefox in the main navigation', 'frontierline'),
+    'description' => esc_html__('Display either a "Download Firefox" button or a "Discover Firefox" link in the standard main navigation. Can be overridden by a custom menu.', 'frontierline'),
+    'priority' => 7,
+    'section'  => 'frontierline_theme_options',
+    'type'     => 'select',
+    'choices'  => array(
+      'link'      => __('Discover Firefox (menu link)', 'frontierline'),
+      'button'    => __('Download Firefox (button)', 'frontierline'),
     ),
   ));
 
@@ -75,28 +99,6 @@ function frontierline_customize_register($wp_customize) {
     'section'     => 'frontierline_theme_options',
     'settings'    => 'frontierline_category_drawer',
     'type'        => 'checkbox',
-  ));
-
-  // Register Firefox download button option and control
-  $wp_customize->add_setting('frontierline_firefox_button', array(
-    'capability'        => 'edit_theme_options',
-    'default'           => '',
-    'sanitize_callback' => 'frontierline_sanitize_firefox_button',
-    'type'              => 'theme_mod',
-  ));
-
-  $wp_customize->add_control('frontierline_firefox_button', array(
-    'label'       => esc_html__('Firefox in the main navigation', 'frontierline'),
-    'description' => esc_html__('Display "Download Firefox" button next to the global menu, or include the "Discover Firefox" into the global menu (if not defined manually).', 'frontierline'),
-    'priority' => 7,
-    'section'     => 'frontierline_theme_options',
-    'settings'    => 'frontierline_firefox_button',
-    'type'     => 'select',
-    'choices'  => array(
-      ''         => __('Discover Firefox (menu link)', 'frontierline'),
-      '1'        => __('Download Firefox (button)', 'frontierline'),
-      'nothing'  => __('Nothing', 'frontierline'),
-    ),
   ));
 
   // Register hero image option and control
@@ -208,10 +210,10 @@ function frontierline_sanitize_head_pattern($input) {
 
 
 /**
- * Sanitize the Firefox download button.
+ * Sanitize the global menu Firefox option.
  */
-function frontierline_sanitize_firefox_button($input) {
-  return frontierline_sanitize_select($input, array('', '1', 'nothing'), '');
+function frontierline_sanitize_global_firefox($input) {
+  return frontierline_sanitize_select($input, array('link', 'button'), 'link');
 }
 
 
